@@ -1,3 +1,4 @@
+var key = require('./config.js');
 const express = require("express");
 const https = require("https");
 const bodyParser = require('body-parser');
@@ -5,14 +6,14 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.get("/", function(req, res) {
-  res.sendfile(__dirname +"/index.html");
+  res.sendFile(__dirname +"/index.html");
 });
 
 app.post("/", function (req,res) {
 const query = req.body.City;
-const appKey = "ae293030bc56a7c970bf90945ae88231";
 const unit = "metric";
-const url = "https://api.openweathermap.org/data/2.5/weather?q="+ query +"+&appid="+appKey+"&units="+unit;
+
+const url = "https://api.openweathermap.org/data/2.5/weather?q="+ query +"+&appid="+ key.appKey+"&units="+unit;
 
 https.get(url, function(response) {
   console.log(response.statusCode);
@@ -34,5 +35,5 @@ https.get(url, function(response) {
 
 });
 app.listen(3000, function() {
-  console.log("server running on 3000");
+  console.log("server running on 3000 " );
 });
